@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
+import React,{ Component } from 'react';
+import { Route, withRouter } from 'react-router-dom';
+import LoginContainer from './components/LoginContainer';
+import ChatContainer from './components/ChatContainer';
+import UserContainer from './components/UserContainer';
+import firebaseApp from './firebaseConfig';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  componentDidMount() {
+    firebaseApp.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({ user });
+      } else {
+        this.props.history.push('/login')
+      };
+    })
+  }
+
+  render() {
+    return (
+      <div className="inner-container">
+        <Route path='/login' component={LoginContainer}/>
+        <Route exact path='/' component={ChatContainer}/>
+        <Route exact path='/users/:id' component={UserContainer}/>
+      </div>
+    );
+  }
 }
 
-export default App;
+export default withRouter(App);
