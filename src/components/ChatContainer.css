@@ -1,0 +1,35 @@
+#message-container {
+    height: 70vh;
+    overflow-y: scroll;
+}
+
+.msg_container {
+    width: 100%;
+}
+
+.message {
+    margin-top: auto;
+    margin-bottom: 5px;
+    border-radius: 15px;
+    background-color: #ebebeb;
+    padding: 10px;
+    display: inline-block;
+}
+
+.author {
+    display: block;
+    width: 100%;
+}
+
+.mine {
+    text-align: right;
+}
+
+.mine .message {
+    background-color:#007bff;
+    color: #fff;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
