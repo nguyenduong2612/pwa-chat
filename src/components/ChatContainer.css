@@ -1,5 +1,5 @@
 #message-container {
-    height: 70vh;
+    height: calc(100vh - 130px - 1rem);
     overflow-y: scroll;
 }
 

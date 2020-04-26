@@ -67,7 +67,6 @@ class App extends Component {
           )}
         />
         <Route
-          exact 
           path='/users/:id' 
           render={({history, match}) => (
             <UserContainer 
