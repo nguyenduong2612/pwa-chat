@@ -3,6 +3,7 @@ import { Route, withRouter } from 'react-router-dom';
 import LoginContainer from './components/LoginContainer';
 import ChatContainer from './components/ChatContainer';
 import UserContainer from './components/UserContainer';
+import NotificationResource from './resources/NotificationResource';
 import firebaseApp from './firebaseConfig';
 import './App.css';
 
@@ -13,9 +14,12 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.notifications = new NotificationResource(firebaseApp.messaging(), firebaseApp.database());
+
     firebaseApp.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({ user });
+        this.notifications.changeUser(user);
       } else {
         this.props.history.push('/login')
       };
@@ -48,7 +52,7 @@ class App extends Component {
       .database()
       .ref('messages/')
       .push(data);
-    console.log(msg);
+    //console.log(msg);
   }
 
   render() {
