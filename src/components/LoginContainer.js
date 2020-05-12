@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { Button, Modal } from 'react-bootstrap';
 import Header from './Header';
+import SignupContainer from './SignupContainer';
 import firebaseApp from '../firebaseConfig';
 
 class LoginContainer extends Component {
@@ -8,14 +10,24 @@ class LoginContainer extends Component {
     this.state = {
       email: "",
       password: "",
-      error: ""
+      error: "",
+      showModal: false
     }
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.handleShowModal = this.handleShowModal.bind(this);
   }
   
+  handleCloseModal = () => {
+    this.setState({ showModal: false })
+  }
+
+  handleShowModal = () => {
+    this.setState({ showModal: true })
+  }
 
   login() {
     firebaseApp
@@ -26,25 +38,12 @@ class LoginContainer extends Component {
       })
       .catch(err => {
         if (err.code === 'auth/user-not-found') {
-          this.signup();
+          this.setState({ error: 'User not found' });
         } else {
           this.setState({ error: 'Error logging in' });
         }
       })
   } 
-
-  signup() {
-    firebaseApp
-      .auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then(res => {
-        this.props.history.push('/');
-      })
-      .catch(error => {
-        console.log(error);
-        this.setState({ error: 'Error signup' });
-      })
-  }
 
   handleEmailChange = (event) => {
     this.setState({email: event.target.value});
@@ -101,6 +100,10 @@ class LoginContainer extends Component {
 
           <button type="submit" className="btn btn-primary">Submit</button>
         </form>
+        <p className="mt-3"><Button className="px-0" variant="link" onClick={() => this.handleShowModal()}>Don't have an account ? Create one</Button></p>
+        <Modal show={this.state.showModal} onHide={() => this.handleCloseModal()}>
+          <SignupContainer />
+        </Modal>
       </div>
     );
   }

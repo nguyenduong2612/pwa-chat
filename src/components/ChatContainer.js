@@ -71,7 +71,7 @@ class ChatContainer extends Component {
             ))
           }
         </div>
-        <div className="input-group mb-3">
+        <div className="input-group mb-2 mt-1">
           <input 
             type="text" 
             className="form-control" 
