@@ -45,8 +45,16 @@ class SignupContainer extends Component {
     firebaseApp
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then(res => {
-        // signup successful
+      .then(function(data) {
+        console.log("User " + data.user.uid + " created successfully!");
+        const user = {
+          email: data.user.email,
+          uid: data.user.uid
+        };
+        firebaseApp
+          .database()
+          .ref('userEmails')
+          .push(user);
       })
       .catch(error => {
         console.log(error);

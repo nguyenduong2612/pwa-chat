@@ -3,6 +3,7 @@ import { Route, withRouter } from 'react-router-dom';
 import LoginContainer from './components/LoginContainer';
 import ChatContainer from './components/ChatContainer';
 import UserContainer from './components/UserContainer';
+import AllUserContainer from './components/AllUserContainer';
 import NotificationResource from './resources/NotificationResource';
 import firebaseApp from './firebaseConfig';
 import './App.css';
@@ -41,11 +42,12 @@ class App extends Component {
     this.setState({ messages });
   }
 
-  handleSubmitMessage = (msg) => {
+  handleSubmitMessage = (msg, des_user_id) => {
     const data = {
       msg,
       author: this.state.user.email,
       user_id: this.state.user.uid,
+      des_user_id,
       timestamp: Date.now()
     };
     firebaseApp
@@ -59,7 +61,8 @@ class App extends Component {
     return (
       <div className="inner-container">
         <Route path='/login' component={LoginContainer}/>
-        <Route 
+        <Route exact path='/' component={AllUserContainer}/>
+        {/* <Route 
           exact 
           path='/' 
           render={() => (
@@ -69,12 +72,14 @@ class App extends Component {
               messages={this.state.messages}
             />
           )}
-        />
+        /> */}
         <Route
           path='/users/:id' 
           render={({history, match}) => (
-            <UserContainer 
+            <UserContainer
+              onSubmit={this.handleSubmitMessage} 
               messages={this.state.messages}
+              user={this.state.user}
               userID={match.params.id}
             />
           )}
