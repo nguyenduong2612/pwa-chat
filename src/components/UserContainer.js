@@ -69,8 +69,8 @@ class UserContainer extends Component {
         >
           {
             this.props.messages.map(msg => {
-              if ((msg.user_id === this.props.userID) || 
-                  (msg.author === this.props.user.email && msg.des_user_id === this.props.userID)) {
+              if ((msg.user_id === this.props.userID && msg.des_user_id === this.props.user.uid) || 
+                  (msg.user_id === this.props.user.uid && msg.des_user_id === this.props.userID)) {
                 return (
                   <div 
                     key={msg.id} 
