@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Header from './Header';
 import firebaseApp from '../firebaseConfig';
+import Select from 'react-select';
 import './ChatContainer.css';
 
 class AllUserContainer extends Component {
   state = {
-    users: []
+    users: [],
+    selectedOption: null
   }
 
   componentDidMount() {
@@ -18,10 +20,6 @@ class AllUserContainer extends Component {
       });
   }
 
-  handleLogout = () => {
-    firebaseApp.auth().signOut();
-  }
-
   getAllUsers = snapshot => {
     const users = Object.keys(snapshot.val()).map(key => {
       const user = snapshot.val()[key];
@@ -31,13 +29,38 @@ class AllUserContainer extends Component {
     this.setState({ users });
   }
 
+  handleLogout = () => {
+    firebaseApp.auth().signOut();
+  }
+
+  handleSearchChange = selectedOption => {
+    this.setState(
+      { selectedOption },
+      () => {
+        console.log(`Option selected:`, this.state.selectedOption)
+        this.props.history.push(`/users/${selectedOption.value}`)
+      }
+    );
+  };
+
   render() {
+    const { selectedOption } = this.state;
+
     return (
       <div id="AllUserContainer" className="container">
         <Header>
           <button type="button" className="btn btn-danger" onClick={this.handleLogout}>Logout</button>
         </Header>
-        <div id="message-container">
+        <Select
+            isSearchable
+          value={selectedOption}
+          onChange={this.handleSearchChange}
+          options={this.state.users.map(user => ({
+            value: user.uid,
+            label: user.email
+          }))}
+        />
+        {/* <div id="message-container">
           {
             this.state.users.map(user => (
               <div 
@@ -48,7 +71,7 @@ class AllUserContainer extends Component {
               </div>
             ))
           }
-        </div>
+        </div> */}
       </div>
     );
   }

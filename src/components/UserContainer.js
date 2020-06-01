@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import Header from './Header';
-import firebaseApp from '../firebaseConfig';
 import './ChatContainer.css';
 
 class UserContainer extends Component {

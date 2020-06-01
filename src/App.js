@@ -1,7 +1,7 @@
 import React,{ Component } from 'react';
 import { Route, withRouter } from 'react-router-dom';
 import LoginContainer from './components/LoginContainer';
-import ChatContainer from './components/ChatContainer';
+// import ChatContainer from './components/ChatContainer';
 import UserContainer from './components/UserContainer';
 import AllUserContainer from './components/AllUserContainer';
 import NotificationResource from './resources/NotificationResource';
@@ -61,7 +61,15 @@ class App extends Component {
     return (
       <div className="inner-container">
         <Route path='/login' component={LoginContainer}/>
-        <Route exact path='/' component={AllUserContainer}/>
+        <Route 
+          exact 
+          path='/'
+          render={(props) => (
+            <AllUserContainer 
+              {...props}
+            />
+          )}
+        />
         {/* <Route 
           exact 
           path='/' 
