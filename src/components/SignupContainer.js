@@ -34,8 +34,9 @@ class SignupContainer extends Component {
       this.setState({
         password: "",
         confirm_password: "",
-        error: 'Please fill in both fields'
+        error: 'Password and confirm password does not match'
       });
+      alert('Password and confirm password does not match');
     } else {
       this.signup();
     }
@@ -56,9 +57,12 @@ class SignupContainer extends Component {
           .ref('userEmails')
           .push(user);
       })
-      .catch(error => {
-        console.log(error);
-        this.setState({ error: 'Error signup' });
+      .catch(err => {
+        console.log(err);
+        if (err.code === 'auth/email-already-in-use') {
+          alert(err.message);
+          this.setState({ error: 'Error signup' });
+        }
       })
   }
 

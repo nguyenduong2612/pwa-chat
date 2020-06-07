@@ -52,7 +52,7 @@ class AllUserContainer extends Component {
           <button type="button" className="btn btn-danger" onClick={this.handleLogout}>Logout</button>
         </Header>
         <Select
-            isSearchable
+          isSearchable
           value={selectedOption}
           onChange={this.handleSearchChange}
           options={this.state.users.map(user => ({

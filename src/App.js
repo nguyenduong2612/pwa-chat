@@ -21,6 +21,7 @@ class App extends Component {
       if (user) {
         this.setState({ user });
         this.notifications.changeUser(user);
+        this.props.history.push('/');
       } else {
         this.props.history.push('/login')
       };
@@ -60,7 +61,14 @@ class App extends Component {
   render() {
     return (
       <div className="inner-container">
-        <Route path='/login' component={LoginContainer}/>
+        <Route 
+          path='/login' 
+          render={(props) => (
+            <LoginContainer 
+              {...props}
+            />
+          )}
+        />
         <Route 
           exact 
           path='/'

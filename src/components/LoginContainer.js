@@ -3,6 +3,7 @@ import { Button, Modal } from 'react-bootstrap';
 import Header from './Header';
 import SignupContainer from './SignupContainer';
 import firebaseApp from '../firebaseConfig';
+import firebase from 'firebase';
 
 class LoginContainer extends Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class LoginContainer extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleShowModal = this.handleShowModal.bind(this);
+    this.handleLoginFacebook = this.handleLoginFacebook.bind(this);
   }
   
   handleCloseModal = () => {
@@ -37,9 +39,9 @@ class LoginContainer extends Component {
         this.props.history.push('/'); // Login success then redirect to '/'
       })
       .catch(err => {
-        if (err.code === 'auth/user-not-found') {
-          this.setState({ error: 'User not found' });
-        } else {
+        console.log(err);
+        if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
+          alert('Your username or password is incorrect. Please try again');
           this.setState({ error: 'Error logging in' });
         }
       })
@@ -62,6 +64,19 @@ class LoginContainer extends Component {
       this.setState({ error: 'Please fill in both fields' });
     }
   }
+
+  handleLoginFacebook = () => {
+    var provider = new firebase.auth.FacebookAuthProvider();
+    firebaseApp
+      .auth()
+      .signInWithRedirect(provider)
+      .then(this.authFacebookHandler);
+  }
+
+  authFacebookHandler = async authData => {
+    const user = authData.user;
+    console.log(user);
+  };
 
   render() {
     return (
@@ -98,7 +113,8 @@ class LoginContainer extends Component {
             <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
           </div>
 
-          <button type="submit" className="btn btn-primary">Submit</button>
+          <button type="submit" className="btn btn-primary mr-3">Submit</button>
+          <button type="button" className="btn btn-primary" onClick={() => this.handleLoginFacebook()}>Login with Facebook</button>
         </form>
         <p className="mt-3"><Button className="px-0" variant="link" onClick={() => this.handleShowModal()}>Don't have an account ? Create one</Button></p>
         <Modal show={this.state.showModal} onHide={() => this.handleCloseModal()}>
