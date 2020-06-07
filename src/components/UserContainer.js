@@ -48,8 +48,10 @@ class UserContainer extends Component {
   }
 
   handleSubmit = () => {
-    this.props.onSubmit(this.state.newMessage, this.props.userID);
-    this.setState({ newMessage: '' });
+    if (this.state.newMessage.trim() !== '' && this.state.newMessage.trim() !== ' ') {
+      this.props.onSubmit(this.state.newMessage.trim(), this.props.userID);
+      this.setState({ newMessage: '' });
+    }
   }
 
   render() {
