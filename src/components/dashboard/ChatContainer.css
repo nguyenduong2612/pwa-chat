@@ -1,0 +1,47 @@
+#message-container {
+    height: calc(100vh - 135px - 1rem);
+    overflow-y: scroll;
+}
+
+.msg_container {
+    width: 100%;
+}
+
+.message {
+    margin-top: auto;
+    margin-bottom: 5px;
+    border-radius: 15px;
+    background-color: #ebebeb;
+    padding: 10px;
+    display: inline-block;
+}
+
+.author {
+    display: block;
+    width: 100%;
+}
+
+.mine {
+    text-align: right;
+}
+
+.mine .message {
+    background-color:#007bff;
+    color: #fff;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+.profile-btn {
+    background-color: #750ac5;
+    color: white;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.my-name {
+    display: inline-block;
+    padding: 30px 15px 20px;
+}

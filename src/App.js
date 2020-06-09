@@ -1,9 +1,10 @@
 import React,{ Component } from 'react';
 import { Route, withRouter } from 'react-router-dom';
-import LoginContainer from './components/LoginContainer';
+import LoginContainer from './components/login/LoginContainer';
 // import ChatContainer from './components/ChatContainer';
-import UserContainer from './components/UserContainer';
-import AllUserContainer from './components/AllUserContainer';
+import UserContainer from './components/user/UserContainer';
+import ChatContainer from './components/dashboard/ChatContainer';
+import Profile from './components/profile/Profile';
 import NotificationResource from './resources/NotificationResource';
 import firebaseApp from './firebaseConfig';
 import './App.css';
@@ -11,6 +12,7 @@ import './App.css';
 class App extends Component {
   state = {
     user: null,
+    email: '',
     messages: []
   }
 
@@ -20,6 +22,7 @@ class App extends Component {
     firebaseApp.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({ user });
+        this.setState({ email: user.email });
         this.notifications.changeUser(user);
         this.props.history.push('/');
       } else {
@@ -71,9 +74,20 @@ class App extends Component {
         />
         <Route 
           exact 
+          path='/profile'
+          render={(props) => (
+            <Profile
+              email={this.state.email}
+              {...props}
+            />
+          )}
+        />
+        <Route 
+          exact 
           path='/'
           render={(props) => (
-            <AllUserContainer 
+            <ChatContainer
+              email={this.state.email}
               {...props}
             />
           )}

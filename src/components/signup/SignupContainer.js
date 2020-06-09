@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import firebaseApp from '../firebaseConfig';
+import firebaseApp from '../../firebaseConfig';
+
+import './SignupContainer.css';
 
 class SignupContainer extends Component {
   constructor(props) {
@@ -69,46 +71,46 @@ class SignupContainer extends Component {
   render() {
     return (
       <form className='form' onSubmit={this.handleSubmit}>
-        <h3 className='card-header bg-primary text-white mb-4 pl-4'>Sign up now</h3>
-        <div className="form-group mx-4">
-          <label htmlFor="exampleInputEmail1">Email address</label>
-          <input 
-            type="email" 
-            className="form-control" 
-            id="exampleInputEmail1" 
-            onChange={this.handleEmailChange}
-            value={this.state.email}
-            required
-          />
-        </div>
+        <h3 className='card-header bg-primary text-white text-center mb-5 pl-4'>Sign up now</h3>
+          <div className="form-group mx-4">
+            <input 
+              type="email" 
+              className="login-form-control form-control" 
+              id="exampleInputEmail1" 
+              onChange={this.handleEmailChange}
+              value={this.state.email}
+              placeholder="Email address"
+              required
+            />
+          </div>
 
-        <div className="form-group mx-4">
-          <label htmlFor="exampleInputPassword1">Password</label>
-          <input 
-            type="password" 
-            className="form-control" 
-            id="exampleInputPassword1"
-            onChange={this.handlePasswordChange}
-            value={this.state.password}
-            required
-          />
-        </div>
+          <div className="form-group mx-4">
+            <input 
+              type="password" 
+              className="login-form-control form-control" 
+              id="exampleInputPassword1"
+              onChange={this.handlePasswordChange}
+              value={this.state.password}
+              placeholder="Password"
+              required
+            />
+          </div>
 
-        <div className="form-group mx-4">
-          <label htmlFor="exampleInputConfirmPassword1">Confirm Password</label>
-          <input 
-            type="password" 
-            className="form-control" 
-            id="exampleInputConfirmPassword1"
-            onChange={this.handleConfirmPasswordChange}
-            value={this.state.confirm_password}
-            required
-          />
-        </div>
-        
-        <div className='center-button mx-4'>
-            <button className="btn btn-primary submit-button mb-4" value="submit">Sign up</button>
-        </div>
+          <div className="form-group mx-4">
+            <input 
+              type="password" 
+              className="login-form-control form-control" 
+              id="exampleInputConfirmPassword1"
+              onChange={this.handleConfirmPasswordChange}
+              value={this.state.confirm_password}
+              placeholder="Confirm password"
+              required
+            />
+          </div>
+          
+          <div className='center-button mx-4'>
+              <button id="signup-btn" className="btn btn-primary submit-button mb-5" value="submit">Sign up</button>
+          </div>
       </form>
     );
   }

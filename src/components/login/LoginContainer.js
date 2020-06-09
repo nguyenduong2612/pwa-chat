@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import Header from './Header';
-import SignupContainer from './SignupContainer';
-import firebaseApp from '../firebaseConfig';
+import Header from '../Header';
+import SignupContainer from '../signup/SignupContainer';
+import firebaseApp from '../../firebaseConfig';
 import firebase from 'firebase';
+
+import './LoginContainer.css';
 
 class LoginContainer extends Component {
   constructor(props) {
@@ -80,43 +82,47 @@ class LoginContainer extends Component {
 
   render() {
     return (
-      <div id="LoginContainer" className="container">
-        <Header />
+      <div id="LoginContainer" className="container px-4">
+        <Header>
+          <div className="logo">
+            <h2 className="navbar-brand mt-4 mr-0">Chatastrophe</h2>
+          </div>
+        </Header>
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
-            <label htmlFor="exampleInputEmail1">Email address</label>
+            {/* <label htmlFor="exampleInputEmail1">Email address</label> */}
             <input 
               type="email" 
-              className="form-control" 
+              className="login-form-control form-control" 
               id="exampleInputEmail1" 
               onChange={this.handleEmailChange}
               value={this.state.email}
+              placeholder="Email address"
               required
             />
-            <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
           </div>
 
           <div className="form-group">
-            <label htmlFor="exampleInputPassword1">Password</label>
             <input 
               type="password" 
-              className="form-control" 
+              className="login-form-control form-control" 
               id="exampleInputPassword1"
               onChange={this.handlePasswordChange}
               value={this.state.password}
+              placeholder="Password"
               required
             />
           </div>
 
-          <div className="form-group form-check">
+          {/* <div className="form-group form-check">
             <input type="checkbox" className="form-check-input" id="exampleCheck1" />
             <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
-          </div>
+          </div> */}
 
-          <button type="submit" className="btn btn-primary mr-3">Submit</button>
-          <button type="button" className="btn btn-primary" onClick={() => this.handleLoginFacebook()}>Login with Facebook</button>
+          <button type="submit" id="login-btn" className="btn btn-primary mr-3">Sign in</button>
+          <button type="button" id="fb-btn" className="btn btn-primary" onClick={() => this.handleLoginFacebook()}>Login with Facebook</button>
         </form>
-        <p className="mt-3"><Button className="px-0" variant="link" onClick={() => this.handleShowModal()}>Don't have an account ? Create one</Button></p>
+        <p className="text-center mt-3"><Button className="px-0 create-acc" variant="link" onClick={() => this.handleShowModal()}>Don't have an account ? Create one</Button></p>
         <Modal show={this.state.showModal} onHide={() => this.handleCloseModal()}>
           <SignupContainer />
         </Modal>

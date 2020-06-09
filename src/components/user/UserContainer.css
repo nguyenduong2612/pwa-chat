@@ -30,6 +30,13 @@
     color: #fff;
 }
 
+.user-name {
+    display: inline-block;
+    padding-left: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
 ::-webkit-scrollbar {
     width: 10px;
 }

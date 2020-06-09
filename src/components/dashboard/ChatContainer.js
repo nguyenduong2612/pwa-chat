@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Header from './Header';
-import firebaseApp from '../firebaseConfig';
+import Header from '../Header';
+import firebaseApp from '../../firebaseConfig';
 import Select from 'react-select';
 import './ChatContainer.css';
 
-class AllUserContainer extends Component {
+class ChatContainer extends Component {
   state = {
     users: [],
     selectedOption: null
@@ -49,8 +49,11 @@ class AllUserContainer extends Component {
     return (
       <div id="AllUserContainer" className="container">
         <Header>
-          <button type="button" className="btn btn-danger" onClick={this.handleLogout}>Logout</button>
+          <Link className="btn profile-btn" to={'/profile'}><i className="fa fa-user" aria-hidden="true"></i></Link>
+          {/* <button type="button" className="btn profile-btn" onClick={this.handleRedirect}><i class="fa fa-user" aria-hidden="true"></i></button> */}
+          <h4 className="my-name">{this.props.email}</h4>
         </Header>
+        
         <Select
           isSearchable
           value={selectedOption}
@@ -60,21 +63,9 @@ class AllUserContainer extends Component {
             label: user.email
           }))}
         />
-        {/* <div id="message-container">
-          {
-            this.state.users.map(user => (
-              <div 
-                key={user.id} 
-                className={`msg_container mb-3`}
-              >
-                <Link className="user" to={`/users/${user.uid}`}>{user.email}</Link>
-              </div>
-            ))
-          }
-        </div> */}
       </div>
     );
   }
 }
 
-export default AllUserContainer;
+export default ChatContainer;

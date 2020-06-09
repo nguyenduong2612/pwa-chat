@@ -2,8 +2,7 @@ import React from 'react';
 
 const Header = (props) => {
   return (
-    <nav className="navbar navbar-light bg-light mb-4">
-      <h2 className="navbar-brand">Chatastrophe</h2>
+    <nav className="navbar navbar-light bg-white mb-4 d-block">
       {props.children}
     </nav>
   );

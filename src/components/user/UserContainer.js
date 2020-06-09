@@ -1,25 +1,20 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import Header from './Header';
-import './ChatContainer.css';
+import Header from '../Header';
+import firebaseApp from '../../firebaseConfig';
+import './UserContainer.css';
 
 class UserContainer extends Component {
-  renderedUserEmail = false;
 
   state = { 
     newMessage: '',
-    des_user_id: '' 
-  };
-
-  getAuthor = (author) => {
-    if (!this.renderedUserEmail) {
-      this.renderedUserEmail = true;
-      return <p className="author">{author}</p>
-    }
+    des_user_id: '',
+    username: '', 
   };
 
   componentDidMount() {
+    this.getNameUser();
     this.scrollToBottom();
   }
 
@@ -54,13 +49,24 @@ class UserContainer extends Component {
     }
   }
 
+  getNameUser = () => {
+    var ref = firebaseApp.database().ref("userEmails");
+    var query = ref.orderByChild("uid").equalTo(this.props.userID);
+    query.once("value",(snapshot) => {
+      snapshot.forEach((child) => {
+        this.setState({ username: child.val().email });
+      });
+    });
+  }
+
   render() {
     return (
       <div id="UserContainer" className="container">
         <Header>
           <Link to='/'>
-            <button type="button" className="btn btn-danger">Back to chat</button>
+            <i className="fa fa-arrow-left mt-3" aria-hidden="true" style={{fontSize: '24px'}}></i>
           </Link>
+          <p className="user-name">{this.state.username}</p>
         </Header>
         <div 
           id="message-container"
@@ -77,7 +83,6 @@ class UserContainer extends Component {
                     key={msg.id} 
                     className={`msg_container mb-3 ${this.props.user.email === msg.author && 'mine'}`}
                   >
-                    {this.getAuthor(msg.author)}
                     <span className="message">{msg.msg}</span>
                   </div>
                 );
@@ -88,7 +93,7 @@ class UserContainer extends Component {
         <div className="input-group mb-2 mt-1">
           <input 
             type="text" 
-            className="form-control" 
+            className="mess-input form-control" 
             placeholder="Add your message" 
             aria-label="Add your message" 
             aria-describedby="button-addon2"
@@ -98,12 +103,12 @@ class UserContainer extends Component {
           />
           <div className="input-group-append">
             <button 
-              className="btn btn-primary"
+              className="send btn btn-primary"
               type="button" 
               id="button-addon2"
               onClick={this.handleSubmit}
             >
-              Send
+              <i className="fa fa-paper-plane" aria-hidden="true"></i>
             </button>
           </div>
         </div>
