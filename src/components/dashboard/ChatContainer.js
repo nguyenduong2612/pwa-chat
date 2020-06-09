@@ -51,7 +51,7 @@ class ChatContainer extends Component {
         <Header>
           <Link className="btn profile-btn" to={'/profile'}><i className="fa fa-user" aria-hidden="true"></i></Link>
           {/* <button type="button" className="btn profile-btn" onClick={this.handleRedirect}><i class="fa fa-user" aria-hidden="true"></i></button> */}
-          <h4 className="my-name">{this.props.email}</h4>
+          <p className="my-name">{this.props.email}</p>
         </Header>
         
         <Select
