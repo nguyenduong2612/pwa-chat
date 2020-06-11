@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../Header';
+import Box from '../box/Box';
 import firebaseApp from '../../firebaseConfig';
 import Select from 'react-select';
 import './ChatContainer.css';
@@ -65,6 +66,17 @@ class ChatContainer extends Component {
             label: user.email
           }))}
         />
+
+        <div className="box-chat mt-4">
+          {this.state.users.map(user => (
+            <Box 
+              key={user.uid}
+              user={user}
+              myEmail={this.props.email}
+              myId={this.props.uid}
+            />
+          ))}
+        </div>
       </div>
     );
   }

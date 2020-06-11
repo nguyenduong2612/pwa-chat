@@ -13,6 +13,7 @@ class App extends Component {
   state = {
     user: null,
     email: '',
+    uid: '',
     messages: []
   }
 
@@ -23,6 +24,7 @@ class App extends Component {
       if (user) {
         this.setState({ user });
         this.setState({ email: user.email });
+        this.setState({ uid: user.uid })
         this.notifications.changeUser(user);
         this.props.history.push('/');
       } else {
@@ -88,6 +90,7 @@ class App extends Component {
           render={(props) => (
             <ChatContainer
               email={this.state.email}
+              uid={this.state.uid}
               {...props}
             />
           )}

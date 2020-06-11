@@ -1,0 +1,16 @@
+.box {
+    display: block;
+    height: 60px;
+    padding: 10px 0;
+    color: #000;
+}
+
+.box > img {
+    margin-top: -20px;
+}
+
+.user-last-msg {
+    display: block;
+    font-size: 12px;
+    color: gray;
+}
