@@ -56,6 +56,8 @@ class ChatContainer extends Component {
         
         <Select
           isSearchable
+          placeholder="Search"
+          components={{ DropdownIndicator:() => null, IndicatorSeparator:() => null }}
           value={selectedOption}
           onChange={this.handleSearchChange}
           options={this.state.users.map(user => ({

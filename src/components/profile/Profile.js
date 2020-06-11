@@ -18,9 +18,8 @@ class Profile extends Component {
 						<img src={'./logo192.png'} alt="Logo" />
 						<h3 className="my-name-profile">{this.props.email}</h3>
 					</div>
+					<button type="button" className=" mt-4 btn btn-outline-danger profile-component" onClick={this.handleLogout}><i className="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
         </Header>
-        
-				<button type="button" className=" mt-4 btn btn-outline-danger profile-component" onClick={this.handleLogout}><i className="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
       </div>
 		);
 	}
