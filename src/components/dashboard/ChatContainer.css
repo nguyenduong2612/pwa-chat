@@ -1,37 +1,20 @@
-#message-container {
-    height: calc(100vh - 130px - 1rem);
+.box-chat {
+    height: calc(100vh - 163px - 5rem);
     overflow-y: scroll;
+}
+
+.bottom-bar {
+    height: 3.5rem;
+    overflow: hidden;
+}
+
+.bottom-bar .column {
+    text-align: center;
+    vertical-align: middle;
 }
 
 .msg_container {
     width: 100%;
-}
-
-.message {
-    margin-top: auto;
-    margin-bottom: 5px;
-    border-radius: 15px;
-    background-color: #ebebeb;
-    padding: 10px;
-    display: inline-block;
-}
-
-.author {
-    display: block;
-    width: 100%;
-}
-
-.mine {
-    text-align: right;
-}
-
-.mine .message {
-    background-color:#007bff;
-    color: #fff;
-}
-
-::-webkit-scrollbar {
-    width: 10px;
 }
 
 .profile-btn {
@@ -41,9 +24,23 @@
     display: inline-block;
 }
 
+.title {
+    display: block;
+    font-size: 28px;
+}
+
 .my-name {
     display: inline-block;
-    padding: 30px 0 20px 15px;
+    padding: 5px 0 0px 15px;
     font-size: 18px;
     font-weight: bold;
+}
+
+.text-gray {
+    color: #aaa;
+}
+
+.text-gray:hover {
+    text-decoration: none;
+    color: gray;
 }

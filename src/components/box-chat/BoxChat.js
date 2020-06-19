@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import firebaseApp from '../../firebaseConfig';
-import './Box.css'
+import './BoxChat.css'
 
 
-class Box extends Component {
+class BoxChat extends Component {
 	
 	state = { 
     lastMess: ''
@@ -22,7 +22,6 @@ class Box extends Component {
 		firebaseApp
       .database()
 			.ref('messages/')
-			.orderByChild('timestamp')
       .on('value', snapshot => {
         var messages = Object.keys(snapshot.val()).map(key => {
 					const msg = snapshot.val()[key];
@@ -50,8 +49,8 @@ class Box extends Component {
 		var box;
 		if (this.state.lastMess) {
 			box = <Link className="box" to={`/users/${this.props.user.uid}`}>
-							<img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png" width="40" />
-							<div className="d-inline-block ml-2">
+							<img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/bubble-512.png" width="40" />
+							<div className="d-inline-block ml-2 pl-1">
 								<span className="box-user-name">{this.props.user.email}</span>
 								<span className="user-last-msg">{this.state.lastMess}</span>
 							</div>	
@@ -63,4 +62,4 @@ class Box extends Component {
 	}
 }
 
-export default Box;
+export default BoxChat;

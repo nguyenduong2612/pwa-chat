@@ -2,8 +2,10 @@ import React,{ Component } from 'react';
 import { Route, withRouter } from 'react-router-dom';
 import LoginContainer from './components/login/LoginContainer';
 // import ChatContainer from './components/ChatContainer';
-import UserContainer from './components/user/UserContainer';
+import User from './components/user/User';
+import Channel from './components/channel/Channel';
 import ChatContainer from './components/dashboard/ChatContainer';
+import ChannelContainer from './components/channel-container/ChannelContainer';
 import Profile from './components/profile/Profile';
 import NotificationResource from './resources/NotificationResource';
 import firebaseApp from './firebaseConfig';
@@ -26,7 +28,7 @@ class App extends Component {
         this.setState({ email: user.email });
         this.setState({ uid: user.uid })
         this.notifications.changeUser(user);
-        this.props.history.push('/');
+        // this.props.history.push('/');
       } else {
         this.props.history.push('/login')
       };
@@ -63,6 +65,21 @@ class App extends Component {
     //console.log(msg);
   }
 
+  // handleSubmitChannelMessage = (msg, channel_id) => {
+  //   const data = {
+  //     msg,
+  //     author: this.state.user.email,
+  //     user_id: this.state.user.uid,
+  //     des_user_id : channel_id,
+  //     timestamp: Date.now()
+  //   };
+  //   firebaseApp
+  //     .database()
+  //     .ref('messages/')
+  //     .push(data);
+  //   //console.log(msg);
+  // }
+
   render() {
     return (
       <div className="inner-container">
@@ -70,6 +87,15 @@ class App extends Component {
           path='/login' 
           render={(props) => (
             <LoginContainer 
+              {...props}
+            />
+          )}
+        />
+        <Route 
+          path='/channel' 
+          render={(props) => (
+            <ChannelContainer
+              email={this.state.email} 
               {...props}
             />
           )}
@@ -95,25 +121,25 @@ class App extends Component {
             />
           )}
         />
-        {/* <Route 
-          exact 
-          path='/' 
-          render={() => (
-            <ChatContainer 
-              onSubmit={this.handleSubmitMessage}
-              user={this.state.user}
-              messages={this.state.messages}
-            />
-          )}
-        /> */}
         <Route
           path='/users/:id' 
           render={({history, match}) => (
-            <UserContainer
+            <User
               onSubmit={this.handleSubmitMessage} 
               messages={this.state.messages}
               user={this.state.user}
               userID={match.params.id}
+            />
+          )}
+        />
+        <Route
+          path='/channels/:id' 
+          render={({history, match}) => (
+            <Channel
+              onSubmit={this.handleSubmitMessage}
+              messages={this.state.messages}
+              user={this.state.user}
+              channelID={match.params.id}
             />
           )}
         />

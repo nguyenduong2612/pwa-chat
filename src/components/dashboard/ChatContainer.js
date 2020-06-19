@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../Header';
-import Box from '../box/Box';
+import BoxChat from '../box-chat/BoxChat';
 import firebaseApp from '../../firebaseConfig';
 import Select from 'react-select';
 import './ChatContainer.css';
@@ -30,10 +30,6 @@ class ChatContainer extends Component {
     this.setState({ users });
   }
 
-  handleLogout = () => {
-    firebaseApp.auth().signOut();
-  }
-
   handleSearchChange = selectedOption => {
     this.setState(
       { selectedOption },
@@ -52,7 +48,7 @@ class ChatContainer extends Component {
         <Header>
           <Link className="btn profile-btn" to={'/profile'}><i className="fa fa-user" aria-hidden="true"></i></Link>
           {/* <button type="button" className="btn profile-btn" onClick={this.handleRedirect}><i class="fa fa-user" aria-hidden="true"></i></button> */}
-          <p className="my-name">{this.props.email}</p>
+          <p className="my-name"><span className="title">Chat</span>{this.props.email}</p>
         </Header>
         
         <Select
@@ -69,13 +65,22 @@ class ChatContainer extends Component {
 
         <div className="box-chat mt-4">
           {this.state.users.map(user => (
-            <Box 
+            <BoxChat 
               key={user.uid}
               user={user}
               myEmail={this.props.email}
               myId={this.props.uid}
             />
           ))}
+        </div>
+
+        <div className="bottom-bar row">
+          <div className="col-6 column">
+            <div><i style={{ fontSize: "20px" }} className="fa fa-comment" aria-hidden="true"></i><p>Chat</p></div>
+          </div>
+          <div className="col-6 column">
+            <Link className="text-gray" to={'/channel'}><i style={{ fontSize: "20px" }} className="fa fa-comments" aria-hidden="true"></i><p>Channel</p></Link>
+          </div>
         </div>
       </div>
     );

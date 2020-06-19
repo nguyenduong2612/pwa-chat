@@ -72,13 +72,20 @@ class LoginContainer extends Component {
     firebaseApp
       .auth()
       .signInWithRedirect(provider)
-      .then(this.authFacebookHandler);
+      .then((res,data) => {
+        this.props.history.push('/');
+        console.log(data.user);
+        // const user = {
+        //   email: data.user.email,
+        //   uid: data.user.uid
+        // };
+        // firebaseApp
+        //   .database()
+        //   .ref('userEmails')
+        //   .push(user);
+        });
   }
-
-  authFacebookHandler = async authData => {
-    const user = authData.user;
-    console.log(user);
-  };
+    
 
   render() {
     return (

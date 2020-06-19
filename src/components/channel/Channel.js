@@ -3,18 +3,16 @@ import { Link } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import Header from '../Header';
 import firebaseApp from '../../firebaseConfig';
-import './UserContainer.css';
 
-class UserContainer extends Component {
+class Channel extends Component {
 
   state = { 
     newMessage: '',
-    des_user_id: '',
-    username: '', 
+    name: ''
   };
 
   componentDidMount() {
-    this.getNameUser();
+    this.getName();
     this.scrollToBottom();
   }
 
@@ -44,29 +42,29 @@ class UserContainer extends Component {
 
   handleSubmit = () => {
     if (this.state.newMessage.trim() !== '' && this.state.newMessage.trim() !== ' ') {
-      this.props.onSubmit(this.state.newMessage.trim(), this.props.userID);
+      this.props.onSubmit(this.state.newMessage.trim(), this.props.channelID);
       this.setState({ newMessage: '' });
     }
   }
 
-  getNameUser = () => {
-    var ref = firebaseApp.database().ref("userEmails");
-    var query = ref.orderByChild("uid").equalTo(this.props.userID);
+  getName = () => {
+    var ref = firebaseApp.database().ref("channels");
+    var query = ref.orderByKey().equalTo(this.props.channelID);
     query.once("value",(snapshot) => {
       snapshot.forEach((child) => {
-        this.setState({ username: child.val().email });
+        this.setState({ name: child.val().name });
       });
     });
   }
 
   render() {
     return (
-      <div id="UserContainer" className="container">
+      <div id="Channel" className="container">
         <Header>
-          <Link to='/'>
+          <Link to='/channel'>
             <i className="fa fa-arrow-left mt-3" aria-hidden="true" style={{fontSize: '24px'}}></i>
           </Link>
-          <p className="user-name">{this.state.username}</p>
+          <p className="user-name">#{this.state.name}</p>
         </Header>
         <div 
           id="message-container"
@@ -76,14 +74,14 @@ class UserContainer extends Component {
         >
           {
             this.props.messages.map(msg => {
-              if ((msg.user_id === this.props.userID && msg.des_user_id === this.props.user.uid) || 
-                  (msg.user_id === this.props.user.uid && msg.des_user_id === this.props.userID)) {
+              if (msg.des_user_id === this.props.channelID) {
                 return (
                   <div 
                     key={msg.id} 
                     className={`msg_container mb-3 ${this.props.user.email === msg.author && 'mine'}`}
                   >
                     <span className="message">{msg.msg}</span>
+                    <p>{msg.author}</p>
                   </div>
                 );
               }
@@ -117,4 +115,4 @@ class UserContainer extends Component {
   }
 }
 
-export default UserContainer;
+export default Channel;
