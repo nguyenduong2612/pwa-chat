@@ -64,14 +64,20 @@ class ChatContainer extends Component {
         />
 
         <div className="box-chat mt-4">
-          {this.state.users.map(user => (
-            <BoxChat 
-              key={user.uid}
-              user={user}
-              myEmail={this.props.email}
-              myId={this.props.uid}
-            />
-          ))}
+          {this.props.messagesLoaded ? (
+            this.state.users.map(user => (
+              <BoxChat 
+                key={user.uid}
+                user={user}
+                myEmail={this.props.email}
+                myId={this.props.uid}
+              />
+            ))
+          ) : (
+            <div style={{ textAlign: "center", marginRight: "-10px" }}>
+              <img src="https://i.pinimg.com/originals/9f/5b/a6/9f5ba6b38c4259a23c5965a8164ec86f.gif" style={{ width: "70%" }} />
+            </div>
+          )}
         </div>
 
         <div className="bottom-bar row">

@@ -16,7 +16,8 @@ class App extends Component {
     user: null,
     email: '',
     uid: '',
-    messages: []
+    messages: [],
+    messagesLoaded: false
   }
 
   componentDidMount() {
@@ -38,6 +39,9 @@ class App extends Component {
       .ref('messages/')
       .on('value', snapshot => {
         this.onMessage(snapshot);
+        if (!this.state.messagesLoaded) {
+          this.setState({ messagesLoaded: true });
+        }
       })
   }
 
@@ -64,21 +68,6 @@ class App extends Component {
       .push(data);
     //console.log(msg);
   }
-
-  // handleSubmitChannelMessage = (msg, channel_id) => {
-  //   const data = {
-  //     msg,
-  //     author: this.state.user.email,
-  //     user_id: this.state.user.uid,
-  //     des_user_id : channel_id,
-  //     timestamp: Date.now()
-  //   };
-  //   firebaseApp
-  //     .database()
-  //     .ref('messages/')
-  //     .push(data);
-  //   //console.log(msg);
-  // }
 
   render() {
     return (
@@ -115,6 +104,7 @@ class App extends Component {
           path='/'
           render={(props) => (
             <ChatContainer
+              messagesLoaded={this.state.messagesLoaded}
               email={this.state.email}
               uid={this.state.uid}
               {...props}
