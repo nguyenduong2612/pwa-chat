@@ -75,14 +75,14 @@ class LoginContainer extends Component {
       .then((res,data) => {
         this.props.history.push('/');
         console.log(data.user);
-        // const user = {
-        //   email: data.user.email,
-        //   uid: data.user.uid
-        // };
-        // firebaseApp
-        //   .database()
-        //   .ref('userEmails')
-        //   .push(user);
+        const user = {
+          email: data.user.email,
+          uid: data.user.uid
+        };
+        firebaseApp
+          .database()
+          .ref('userEmails')
+          .push(user);
         });
   }
     
@@ -131,7 +131,7 @@ class LoginContainer extends Component {
         </form>
         <p className="text-center mt-3"><Button className="px-0 create-acc" variant="link" onClick={() => this.handleShowModal()}>Don't have an account ? Create one</Button></p>
         <Modal show={this.state.showModal} onHide={() => this.handleCloseModal()}>
-          <SignupContainer />
+          <SignupContainer history={this.props.history} />
         </Modal>
       </div>
     );

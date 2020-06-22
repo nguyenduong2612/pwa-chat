@@ -48,7 +48,7 @@ class SignupContainer extends Component {
     firebaseApp
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then(function(data) {
+      .then(data => {
         console.log("User " + data.user.uid + " created successfully!");
         const user = {
           email: data.user.email,
@@ -58,19 +58,25 @@ class SignupContainer extends Component {
           .database()
           .ref('userEmails')
           .push(user);
+          this.props.history.push('/');
       })
       .catch(err => {
         console.log(err);
         if (err.code === 'auth/email-already-in-use') {
+          this.setState({
+            email: "",
+            password: "",
+            confirm_password: "",
+            error: 'Email already in use'
+          });
           alert(err.message);
-          this.setState({ error: 'Error signup' });
         }
       })
   }
 
   render() {
     return (
-      <form className='form' onSubmit={this.handleSubmit}>
+      <div className='form'>
         <h3 className='card-header bg-primary text-white text-center mb-5 pl-4'>Sign up now</h3>
           <div className="form-group mx-4">
             <input 
@@ -109,9 +115,9 @@ class SignupContainer extends Component {
           </div>
           
           <div className='center-button mx-4'>
-              <button id="signup-btn" className="btn btn-primary submit-button mb-5" value="submit">Sign up</button>
+              <button id="signup-btn" className="btn btn-primary submit-button mb-5" value="submit" onClick={() => this.handleSubmit()}>Sign up</button>
           </div>
-      </form>
+      </div>
     );
   }
 }

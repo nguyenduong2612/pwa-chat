@@ -33,13 +33,13 @@ class BoxChat extends Component {
 				});
 
 				messages = messages.filter(function (el) {	//remove undefined messages
-					return el != undefined;
+					return el !== undefined;
 				});
 
 				//console.log(messages)
 
 				messages.map((msg, index) => {
-					if (index == messages.length-1)
+					if (index === messages.length-1)
 						this.setState({lastMess: msg});
 				});
 			})
